@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="secondary">
+      <ion-button (click)="showFilters()">
+          <ion-icon slot="icon-only" name="funnel" [style.color]="hasFilter ? 'orange' : 'inherit'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>Reddit Reader</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar 
+    [(ngModel)]="filter"
+    (ionChange)="filterItems()" 
+    placeholder="Type here..." >
+  </ion-searchbar>
+
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+        pullingIcon="arrow-dropdown"
+        pullingText="Pull to refresh"
+        refreshingSpinner="circles"
+        refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list>
+    <ion-item *ngFor="let feed of feeds" (click)="showItemSelected(feed.data.url)" expand="full">
+      <ion-avatar slot="start">
+        <img [src]="feed.data.thumbnail">
+      </ion-avatar>
+      <ion-label text-wrap>
+        <h2>{{ feed.data.title }}</h2>
+        <p>{{ feed.data.domain }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content
+       loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

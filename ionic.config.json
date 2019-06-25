@@ -1,0 +1,7 @@
+{
+  "name": "RedditReader",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
